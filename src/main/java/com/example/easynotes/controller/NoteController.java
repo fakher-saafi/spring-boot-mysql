@@ -36,12 +36,11 @@ public class NoteController {
                 .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
     }
 
-    @PutMapping("/notes/{id}")
-    public Note updateNote(@PathVariable(value = "id") Long noteId,
-                                           @Valid @RequestBody Note noteDetails) {
+    @PutMapping("/notes")
+    public Note updateNote( @Valid @RequestBody Note noteDetails) {
 
-        Note note = noteRepository.findById(noteId)
-                .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
+        Note note = noteRepository.findById(noteDetails.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteDetails.getId()));
 
         note.setTitle(noteDetails.getTitle());
         note.setContent(noteDetails.getContent());
